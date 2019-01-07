@@ -28,6 +28,10 @@ namespace PKSimpleDataGenerator
 
         public string GetCustomString(int index)
         {
+            if (index > DataCount - 1)
+            {
+                index = index % (DataCount - 1);
+            }
 
             return _dataList[index];
         }
