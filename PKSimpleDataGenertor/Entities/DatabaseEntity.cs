@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace PKSimpleDataGenerator.Entities
 {
@@ -26,5 +27,7 @@ namespace PKSimpleDataGenerator.Entities
         {
             return new SqlConnection(GetConnectionString());
         }
+
+        public List<TableEntity> Tables { get; set; }
     }
 }

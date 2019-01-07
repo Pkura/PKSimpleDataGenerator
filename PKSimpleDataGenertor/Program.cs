@@ -8,9 +8,7 @@ namespace PKSimpleDataGenerator
     {
         static void Main(string[] args)
         {
-            var c = new SqlConnectionStringBuilder();
-            c.inte
-
+          
             var userData = new UserDataFromFiles(@"d:\temp\").GetUserDataDictionaries();
 
             Console.WriteLine(userData["aaabbb"].HasData);
