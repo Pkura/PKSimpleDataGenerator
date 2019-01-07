@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Newtonsoft.Json;
 using PKSimpleDataGenerator.Entities;
 
@@ -8,13 +8,23 @@ namespace PKSimpleDataGenerator
 {
     public class DatabaseMapper
     {
-        public List<DatabaseEntity> GetListFromFile(string fileName)
+        public string Error { get; private set; }
+
+        public DatabaseEntity GetListFromFile(string fileName)
         {
             var fileContent = GetFileContent(fileName);
-            
-            if (string.IsNullOrEmpty(fileContent)) return new List<DatabaseEntity>();
 
-            return JsonConvert.DeserializeObject<List<DatabaseEntity>>(fileContent);
+            if (string.IsNullOrEmpty(fileContent)) return null;
+
+            try
+            {
+                return JsonConvert.DeserializeObject<DatabaseEntity>(fileContent);
+            }
+            catch (Exception ex)
+            {
+                Error = ex.Message;
+                return null;
+            }
         }
 
 
@@ -23,7 +33,7 @@ namespace PKSimpleDataGenerator
             var toReturn = string.Empty;
             try
             {
-                toReturn = File.ReadAllText(fileName);
+                toReturn = File.ReadAllText(fileName, Encoding.UTF8);
             }
             catch (Exception e)
             {

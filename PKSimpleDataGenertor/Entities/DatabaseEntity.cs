@@ -11,6 +11,7 @@ namespace PKSimpleDataGenerator.Entities
         public string InitialCatalog { get; set; }
         public string DataSource { get; set; }
         public bool IntegratedSecurity { get; set; }
+        public List<TableEntity> Tables { get; set; }
 
         public string GetConnectionString()
         {
@@ -27,7 +28,6 @@ namespace PKSimpleDataGenerator.Entities
         {
             return new SqlConnection(GetConnectionString());
         }
-
-        public List<TableEntity> Tables { get; set; }
+        
     }
 }
