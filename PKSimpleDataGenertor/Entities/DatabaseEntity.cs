@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace PKSimpleDataGenerator.Entities
@@ -12,6 +14,8 @@ namespace PKSimpleDataGenerator.Entities
         public string DataSource { get; set; }
         public bool IntegratedSecurity { get; set; }
         public List<TableEntity> Tables { get; set; }
+
+        public string Errors { get; private set; }
 
         public string GetConnectionString()
         {
@@ -28,6 +32,28 @@ namespace PKSimpleDataGenerator.Entities
         {
             return new SqlConnection(GetConnectionString());
         }
-        
+
+        public bool CheckConnection()
+        {
+            var connIsOk = false;
+
+            try
+            {
+                using (var conn = GetSqlConnection())
+                {
+                    conn.Open();
+
+                    if (conn.State == ConnectionState.Open) connIsOk = true;
+                    conn.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Errors = e.Message;
+                return false;
+            }
+
+            return connIsOk;
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 using Newtonsoft.Json;
 using PKSimpleDataGenerator.Entities;
 
-namespace PKSimpleDataGenerator
+namespace PKSimpleDataGenerator.Mappers
 {
     public class DatabaseMapper
     {

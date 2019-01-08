@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PKSimpleDataGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "/dicfolder d:\\temp\\  /dbconfig d:\\temp\\db.test.txt"
+    }
+  }
+}
