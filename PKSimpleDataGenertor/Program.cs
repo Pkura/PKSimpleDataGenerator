@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Args;
 using PKSimpleDataGenerator.Entities;
@@ -10,6 +11,7 @@ namespace PKSimpleDataGenerator
     {
         private static CommandParams _commandParams = new CommandParams();
         private static DatabaseEntity _databaseEntity;
+        private static Dictionary<string, UserDataDictionary> _userDataDictionaries;
 
         private static void Main(string[] args)
         {
@@ -32,8 +34,10 @@ namespace PKSimpleDataGenerator
                 return;
             }
 
-            //var workingDirectory = AppContext.BaseDirectory;
+            var userDataMapper = new UserDataFromFiles(_commandParams.DicFolder);
+            _userDataDictionaries = userDataMapper.GetUserDataDictionaries();
 
+            //var workingDirectory = AppContext.BaseDirectory;
 
             //var databaseMapper = new DatabaseMapper();
             //var l = databaseMapper.GetListFromFile(workingDirectory);
@@ -44,7 +48,6 @@ namespace PKSimpleDataGenerator
 
             //Console.WriteLine(maper.Error);
 
-
             //Console.WriteLine(JsonConvert.SerializeObject(dd,Formatting.Indented));
 
             //var userData = new UserDataFromFiles(@"d:\temp\").GetUserDataDictionaries();
@@ -53,6 +56,7 @@ namespace PKSimpleDataGenerator
             //for(int i=1;i<50;i++) Console.WriteLine(userData["aaabbb"].GetCustomString());
 
             //Console.WriteLine(userData["aaabbb"].GetCustomString(8));
+
             Console.ReadKey();
         }
 
