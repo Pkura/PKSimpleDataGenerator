@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Args;
+using Newtonsoft.Json;
 using PKSimpleDataGenerator.Entities;
 using PKSimpleDataGenerator.Mappers;
 
@@ -19,24 +20,26 @@ namespace PKSimpleDataGenerator
 
             if (!CheckCommandParams())
             {
-                ErrorExit();
+                ErrorExit(null);
                 return;
             }
 
             if (!ReadDatabaseConfig())
             {
-                ErrorExit();
+                ErrorExit(null);
                 return;
             }
+            ConsoleDatabaseInfo();
+
             if (!_databaseEntity.CheckConnection())
             {
-                ErrorExit();
+                ErrorExit(_databaseEntity.Errors);
                 return;
             }
 
             var userDataMapper = new UserDataFromFiles(_commandParams.DicFolder);
             _userDataDictionaries = userDataMapper.GetUserDataDictionaries();
-
+            ConsoleUserDictionaryInfo();
             //var workingDirectory = AppContext.BaseDirectory;
 
             //var databaseMapper = new DatabaseMapper();
@@ -60,8 +63,40 @@ namespace PKSimpleDataGenerator
             Console.ReadKey();
         }
 
-        private static void ErrorExit()
+        private static void ConsoleUserDictionaryInfo()
         {
+            Console.WriteLine($"User dictionaries:{_userDataDictionaries.Count}");
+            Console.WriteLine("====================");
+            var count = 1;
+            foreach (var userDataDictionary in _userDataDictionaries)
+            {
+                Console.WriteLine($"{count}:{userDataDictionary.Key} : {userDataDictionary.Value.DataCount}" );
+                count++;
+            }
+            Console.WriteLine();
+        }
+
+        private static void ConsoleDatabaseInfo()
+        {
+            if (_databaseEntity == null) return;
+
+            Console.WriteLine("Database Info:");
+            Console.WriteLine("==============");
+
+            Console.WriteLine($"Database: {_databaseEntity.InitialCatalog}");
+            Console.WriteLine($"Host: {_databaseEntity.DataSource}");
+
+            Console.WriteLine($"Tables:{_databaseEntity.Tables.Count}");
+            Console.WriteLine("=========");
+            Console.WriteLine($"{JsonConvert.SerializeObject(_databaseEntity.Tables, Formatting.Indented)}");
+            Console.WriteLine();
+        }
+
+        private static void ErrorExit(string msg)
+        {
+
+            if (!string.IsNullOrEmpty(msg)) Console.WriteLine(msg);
+            Console.WriteLine("----- any key to die -----");
             Console.ReadKey();
         }
 

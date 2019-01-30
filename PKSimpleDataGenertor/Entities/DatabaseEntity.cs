@@ -7,9 +7,21 @@ namespace PKSimpleDataGenerator.Entities
 {
     public class DatabaseEntity
     {
+        private string _userId;
         public string Name { get; set; }
         public string Password { get; set; }
-        public string UserId { get; set; }
+
+        public string UserId
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_userId)) return _userId;
+
+                return IntegratedSecurity ? Environment.UserName : _userId;
+            }
+            set => _userId = value;
+        }
+
         public string InitialCatalog { get; set; }
         public string DataSource { get; set; }
         public bool IntegratedSecurity { get; set; }
@@ -19,6 +31,15 @@ namespace PKSimpleDataGenerator.Entities
 
         public string GetConnectionString()
         {
+            if (IntegratedSecurity)
+            {
+                return new SqlConnectionStringBuilder()
+                {
+                    DataSource = DataSource,
+                    IntegratedSecurity = true
+                }.ConnectionString;
+            }
+
             return new SqlConnectionStringBuilder
             {
                 UserID = UserId,

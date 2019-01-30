@@ -9,7 +9,8 @@ namespace PKSimpleDataGenerator.Entities
         public GeneratorTypeEnum GeneratorType { get; set; }
         public int MinValue { get; set; }
         public int MaxValue { get; set; }
-        public int SomeNumber { get; set; }
+        public int Number { get; set; }
+        public string Data { get; set; }
     }
 
 

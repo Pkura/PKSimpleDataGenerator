@@ -19,7 +19,7 @@ namespace PKSimpleDataGenerator
 
         public bool HasData => _dataList.Count > 0;
 
-        private int DataCount => _dataList.Count;
+        public int DataCount => _dataList.Count;
 
         public string GetCustomString()
         {

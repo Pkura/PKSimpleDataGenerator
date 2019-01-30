@@ -6,6 +6,7 @@ namespace PKSimpleDataGenerator.Entities
     {
         public string Name { get; set; }
         public int MaxRecordsToGenerate { get; set; }
+        public bool TruncateTable { get; set; }
         public List<FieldEntity> Fields { get; set; } = new List<FieldEntity>();
     }
 }
