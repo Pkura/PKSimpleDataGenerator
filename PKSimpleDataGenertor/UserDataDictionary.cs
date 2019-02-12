@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PKSimpleDataGenerator
 {
-    public class UserDataDictionary : ICustomString
+    public class UserDataDictionary : IRandomString
     {
         private readonly List<string> _dataList = new List<string>();
         private readonly Random _random = new Random();
@@ -21,12 +21,12 @@ namespace PKSimpleDataGenerator
 
         public int DataCount => _dataList.Count;
 
-        public string GetCustomString()
+        public string GetRandomString()
         {
-            return HasData ? GetCustomString(_random.Next(0, DataCount)) : string.Empty;
+            return HasData ? GetRandomString(_random.Next(0, DataCount)) : string.Empty;
         }
 
-        public string GetCustomString(int index)
+        public string GetRandomString(int index)
         {
             if (index > DataCount - 1)
             {

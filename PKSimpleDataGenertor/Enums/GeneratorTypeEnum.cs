@@ -6,6 +6,7 @@
         Email,
         TelephoneNumber,
         ZipCode,
-        LoremIpsum
+        LoremIpsum,
+        Integer
     }
 }
